@@ -1,3 +1,7 @@
+body {
+  background-color : aqua;
+}
+
 #content {
   margin-left: auto;
   margin-right: auto;

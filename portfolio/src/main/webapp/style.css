@@ -11,3 +11,8 @@ body {
 #greeting-container {
   margin-top: 20px;
 }
+
+.myPortrait {
+  width: 450px;
+  height: 600px;
+}

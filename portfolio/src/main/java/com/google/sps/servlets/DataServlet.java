@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
 
   private final ArrayList<String> messages =  new ArrayList<>();
-  Gson gson = new Gson();
+  private final Gson gson = new Gson();
 
   @Override
   public void init() {
@@ -39,16 +39,9 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String json = convertToJsonUsingGson(messages);
-
     response.setContentType("application/json");
     response.setCharacterEncoding("UTF-8");
-    response.getWriter().print(json);
+    response.getWriter().print(gson.toJson(messages));
     response.getWriter().flush();
-  }
-
-  private String convertToJsonUsingGson(ArrayList<String> messages) {
-    String json = gson.toJson(messages);
-    return json;
   }
 }

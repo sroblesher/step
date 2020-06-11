@@ -27,11 +27,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<String> messages;
+  private final ArrayList<String> messages =  new ArrayList<>();
+  Gson gson = new Gson();
 
   @Override
   public void init() {
-    messages = new ArrayList<>();
     messages.add("It would only take one hour to drive to space.");
     messages.add("Google's first office was a rented garage.");
     messages.add("Walmart has lower acceptance rate than Harvard.");
@@ -48,7 +48,6 @@ public class DataServlet extends HttpServlet {
   }
 
   private String convertToJsonUsingGson(ArrayList<String> messages) {
-    Gson gson = new Gson();
     String json = gson.toJson(messages);
     return json;
   }

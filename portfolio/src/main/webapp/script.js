@@ -28,3 +28,24 @@ function addRandomFact() {
   // Add it to the page.
   document.getElementById('random-facts-container').innerText = randomFact;
 }
+
+function displayMessages() {
+  fetch('/data')
+  .then(response => response.json())
+  .then((messageArray) => {
+    
+    const messageList = document.getElementById('message-container');
+    messageList.innerHTML = '';
+    
+    messageArray.forEach(msg => messageList.appendChild(createListElement(msg)));
+  })
+  .catch((error) => {
+  console.error('Error:', error);
+  });
+}
+
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}

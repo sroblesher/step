@@ -34,9 +34,10 @@ function displayMessages() {
     
     const messageList = document.getElementById('message-container');
     messageList.innerHTML = '';
-    messageList.appendChild(createListElement('1) ' + messageArray[0]));
-    messageList.appendChild(createListElement('2) ' + messageArray[1]));
-    messageList.appendChild(createListElement('3) ' + messageArray[2]));
+
+    for (var i = 0; i < messageArray.length; i++) {
+      messageList.appendChild(createListElement(messageArray[i]));
+    }
   })
   .catch((error) => {
   console.error('Error:', error);

@@ -30,14 +30,14 @@ function addRandomFact() {
 }
 
 function displayMessages() {
-  fetch('/data').then(response => response.json()).then((messageArray) => {
+  fetch('/data')
+  .then(response => response.json())
+  .then((messageArray) => {
     
     const messageList = document.getElementById('message-container');
     messageList.innerHTML = '';
-
-    for (var i = 0; i < messageArray.length; i++) {
-      messageList.appendChild(createListElement(messageArray[i]));
-    }
+    
+    messageArray.forEach(msg => messageList.appendChild(createListElement(msg)));
   })
   .catch((error) => {
   console.error('Error:', error);

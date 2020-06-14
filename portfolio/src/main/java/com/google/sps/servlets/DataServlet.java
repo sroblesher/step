@@ -31,17 +31,28 @@ public class DataServlet extends HttpServlet {
   private final Gson gson = new Gson();
 
   @Override
-  public void init() {
-    messages.add("It would only take one hour to drive to space.");
-    messages.add("Google's first office was a rented garage.");
-    messages.add("Walmart has lower acceptance rate than Harvard.");
-  }
-
-  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
     response.setCharacterEncoding("UTF-8");
     response.getWriter().print(gson.toJson(messages));
     response.getWriter().flush();
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String text = getParameter(request, "text-comment", "");
+
+    messages.add(text);
+    response.setContentType("text/html;");
+    response.getWriter().println(messages);
+    response.sendRedirect("/index.html");
+  }
+
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }

@@ -38,7 +38,7 @@ public final class TextProcessorServlet extends HttpServlet {
     }
 
     // Break the text into individual words.
-    String[] words = text.split("\\s*, \\s*");
+    String[] words = text.split("\\s*,\\s*");
 
     // Sort the words.
     if (sort) {

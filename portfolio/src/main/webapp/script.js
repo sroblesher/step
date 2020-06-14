@@ -29,15 +29,15 @@ function addRandomFact() {
   document.getElementById('random-facts-container').innerText = randomFact;
 }
 
-function displayMessages() {
+function displayComments() {
   fetch('/data')
   .then(response => response.json())
-  .then((messageArray) => {
+  .then((commentArray) => {
     
-    const messageList = document.getElementById('message-container');
-    messageList.innerHTML = '';
+    const commentList = document.getElementById('comments-container');
+    commentList.innerHTML = '';
     
-    messageArray.forEach(msg => messageList.appendChild(createListElement(msg)));
+    commentArray.forEach(msg => commentList.appendChild(createListElement(msg)));
   })
   .catch((error) => {
   console.error('Error:', error);

@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,16 +42,12 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = getParameter(request, "text-comment", "");
-
-    messages.add(text);
+    if (Strings.isNullOrEmpty(text)) messages.add(text);
     response.sendRedirect("/index.html");
   }
 
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {
     String value = request.getParameter(name);
-    if (value == null) {
-      return defaultValue;
-    }
-    return value;
+    return value == null ? defaultValue : value;
   }
 }

@@ -43,8 +43,6 @@ public class DataServlet extends HttpServlet {
     String text = getParameter(request, "text-comment", "");
 
     messages.add(text);
-    response.setContentType("text/html;");
-    response.getWriter().println(messages);
     response.sendRedirect("/index.html");
   }
 

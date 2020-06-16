@@ -35,15 +35,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  private final DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  private final static Gson gson = new Gson();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     List<String> messages =  new ArrayList<>();
-    Gson gson = new Gson();
     Query query = new Query("Task").addSort("text-comment", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
-
     for (Entity entity : results.asIterable()) {
       String a = (String) entity.getProperty("text-comment");
       messages.add(a);

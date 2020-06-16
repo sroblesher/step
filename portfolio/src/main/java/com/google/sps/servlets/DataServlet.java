@@ -21,6 +21,8 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 //import com.google.sps.data.Task;
+import java.util.stream.*;
+import java.util.*; 
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -36,14 +38,13 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
 
   private final DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-  private final Gson gson = new Gson();
+  private final static Gson gson = new Gson();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     List<String> messages =  new ArrayList<>();
     Query query = new Query("Task").addSort("text-comment", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
-
     for (Entity entity : results.asIterable()) {
       String a = (String) entity.getProperty("text-comment");
       messages.add(a);
@@ -57,11 +58,10 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = getParameter(request, "text-comment", "");
-    if (!Strings.isNullOrEmpty(text)) {
-      Entity taskEntity = new Entity("Task");
-      taskEntity.setProperty("text-comment", text);
-      datastore.put(taskEntity);
-    }
+    
+    Entity taskEntity = new Entity("Task");
+    taskEntity.setProperty("text-comment", text);
+    datastore.put(taskEntity);
     response.sendRedirect("/index.html");
   }
 

@@ -21,8 +21,6 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 //import com.google.sps.data.Task;
-import java.util.stream.*;
-import java.util.*; 
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import java.io.IOException;

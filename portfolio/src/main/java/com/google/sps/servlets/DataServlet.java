@@ -57,9 +57,9 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = getParameter(request, "text-comment", "");
     if (!Strings.isNullOrEmpty(text)) {
-    Entity taskEntity = new Entity("Task");
-    taskEntity.setProperty("text-comment", text);
-    datastore.put(taskEntity);
+      Entity taskEntity = new Entity("Task");
+      taskEntity.setProperty("text-comment", text);
+      datastore.put(taskEntity);
     }
     response.sendRedirect("/index.html");
   }

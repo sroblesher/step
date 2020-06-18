@@ -30,7 +30,8 @@ function addRandomFact() {
 }
 
 function displayComments() {
-  fetch('/data')
+  var maxComment = document.getElementById('number-comment-choice').value;
+  fetch('/data?number-comment-choice='+maxComment)
   .then(response => response.json())
   .then((commentArray) => {
     

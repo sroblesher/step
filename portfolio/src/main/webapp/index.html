@@ -12,11 +12,12 @@
       <p>This is Salvador's portfolio.</p>
       <p>I'm currently a STEP intern at Google from The University of Texas at El Paso.</p>
       <img src = "/Images/Me.jpg" class = "myPortrait" />
-
       <p>Click here to get a random fact about me:</p>
       <button onclick="addRandomFact()">Push me!!</button>
       <div id="random-facts-container"></div>
       <p>Display previous comments:</p>
+      <input type="number" id="number-comment-choice" name="number-comment-choice" value="3">
+      <br/>
       <button onclick="displayComments()">Click me!</button>
       <ol type="I" id="comments-container"></ol>
 
@@ -24,6 +25,10 @@
         <p>Comment something...</p>
         <textarea name="text-comment">Type here...</textarea>
         <button type="submit">Submit</button>
+      </form>
+      <form action="/delete-data" method="POST">
+        <p>Delete comments...</p>
+        <button type="submit">Click me!</button>
       </form>
 
     </div>

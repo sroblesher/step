@@ -40,13 +40,33 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String maxCommentsString = request.getParameter("number-comment-choice");
+
+    int maxComments;
+    try {
+      maxComments = Integer.parseInt(maxCommentsString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + maxCommentsString);
+      maxComments = 0;
+    }
+
     List<String> messages =  new ArrayList<>();
     Query query = new Query("Task").addSort("text-comment", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
-      String a = (String) entity.getProperty("text-comment");
-      messages.add(a);
+      if (maxComments > 0) {
+        String a = (String) entity.getProperty("text-comment");
+        messages.add(a);
+      }
+      maxComments--;
     }
+
+    //Display message if no comments
+    if (messages.size() == 0) {
+      response.setContentType("text/html");
+      response.getWriter().println("No comments to display...");
+    }
+
     response.setContentType("application/json");
     response.setCharacterEncoding("UTF-8");
     response.getWriter().print(gson.toJson(messages));

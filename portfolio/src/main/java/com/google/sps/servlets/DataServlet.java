@@ -54,17 +54,11 @@ public class DataServlet extends HttpServlet {
     Query query = new Query("Task").addSort("text-comment", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
+      if (messages.size() >= maxComments) { break; }
       if (maxComments > 0) {
         String a = (String) entity.getProperty("text-comment");
         messages.add(a);
       }
-      maxComments--;
-    }
-
-    //Display message if no comments
-    if (messages.size() == 0) {
-      response.setContentType("text/html");
-      response.getWriter().println("No comments to display...");
     }
 
     response.setContentType("application/json");

@@ -39,6 +39,8 @@ function displayComments() {
     commentList.innerHTML = '';
     
     commentArray.forEach(msg => commentList.appendChild(createListElement(msg)));
+
+    if (isEmpty(commentArray)) commentList.innerHTML = 'No comments to display :(';
   })
   .catch((error) => {
   console.error('Error:', error);
@@ -49,4 +51,11 @@ function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
   return liElement;
+}
+
+function isEmpty(arg) {
+  for (var item in arg) {
+    return false;
+  }
+  return true;
 }

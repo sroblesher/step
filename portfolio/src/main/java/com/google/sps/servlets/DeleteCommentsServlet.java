@@ -31,55 +31,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {
+@WebServlet("/delete-data")
+public class DeleteCommentsServlet extends HttpServlet {
 
   private final DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-  private final static Gson gson = new Gson();
-
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String maxCommentsString = request.getParameter("number-comment-choice");
-
-    int maxComments;
-    try {
-      maxComments = Integer.parseInt(maxCommentsString);
-    } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + maxCommentsString);
-      maxComments = 0;
-    }
-
-    List<String> messages =  new ArrayList<>();
-    Query query = new Query("Task").addSort("text-comment", SortDirection.DESCENDING);
-    PreparedQuery results = datastore.prepare(query);
-    for (Entity entity : results.asIterable()) {
-      if (messages.size() >= maxComments) { break; }
-      if (maxComments > 0) {
-        String a = (String) entity.getProperty("text-comment");
-        messages.add(a);
-      }
-    }
-
-    response.setContentType("application/json");
-    response.setCharacterEncoding("UTF-8");
-    response.getWriter().print(gson.toJson(messages));
-    response.getWriter().flush();
-  }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String text = getParameter(request, "text-comment", "");
-    if (!Strings.isNullOrEmpty(text)) {
-      Entity taskEntity = new Entity("Task");
-      taskEntity.setProperty("text-comment", text);
-      datastore.put(taskEntity);
+    Query query = new Query("Task").addSort("text-comment", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+    for (Entity entity : results.asIterable()) {
+        datastore.delete(entity.getKey());      
     }
     response.sendRedirect("/index.html");
   }
 
-  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
-    String value = request.getParameter(name);
-    return value == null ? defaultValue : value;
-  }
 }
